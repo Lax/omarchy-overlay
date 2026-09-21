@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE pkgmetadata SYSTEM "https://www.gentoo.org/dtd/metadata.dtd">
+<pkgmetadata>
+	<maintainer type="person">
+		<email>liulantao@gmail.com</email>
+		<name>Lax</name>
+	</maintainer>
+	<upstream>
+		<remote-id type="github">omacom/omarchy</remote-id>
+	</upstream>
+	<use>
+		<flag name="skel-seed">Seed /etc/skel from the packaged config on install/upgrade</flag>
+	</use>
+</pkgmetadata>
