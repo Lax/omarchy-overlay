@@ -1,0 +1,29 @@
+--- a/omarchy-nvim-setup
++++ b/omarchy-nvim-setup
+@@ -55,9 +55,11 @@
+   CONFIG_SOURCE_DIR="$PACKAGE_DIR/config"
+ fi
+ 
+-if [[ ! -d "$CONFIG_SOURCE_DIR" || ! -d "$DATA_SOURCE_DIR" ]]; then
+-  echo "Error: omarchy-nvim defaults not found in $CONFIG_SOURCE_DIR / $DATA_SOURCE_DIR." >&2
+-  echo "The package owns both; restore them with: sudo pacman -S omarchy-nvim" >&2
++# Gentoo port: no prebuilt plugin cache ships (upstream builds it with
++# network in the package sandbox); lazy.nvim syncs on first launch instead.
++if [[ ! -d "$CONFIG_SOURCE_DIR" ]]; then
++  echo "Error: omarchy-nvim defaults not found in $CONFIG_SOURCE_DIR." >&2
++  echo "Restore them with: emerge app-editors/omarchy-nvim" >&2
+   exit 1
+ fi
+ 
+@@ -91,6 +93,11 @@
+ }
+ 
+ install_data() {
++  if [[ ! -d "$DATA_SOURCE_DIR" ]]; then
++    echo "No packaged plugin cache; plugins sync on first Neovim launch."
++    return
++  fi
++
+   if [[ -d "$DATA_DIR" && $refresh != true ]]; then
+     echo "Neovim data already exists at $DATA_DIR; leaving it in place."
+     return

@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE pkgmetadata SYSTEM "https://www.gentoo.org/dtd/metadata.dtd">
+<pkgmetadata>
+	<maintainer type="person">
+		<email>liulantao@gmail.com</email>
+		<name>Lax</name>
+	</maintainer>
+	<longdescription>
+		Omarchy shell configuration for Fish, with fzf.fish vendored into the
+		fish vendor directories; omarchy-setup-fish switches the login shell.
+	</longdescription>
+	<upstream>
+		<remote-id type="github">omacom-io/omarchy-fish</remote-id>
+	</upstream>
+</pkgmetadata>

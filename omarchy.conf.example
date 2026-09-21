@@ -1,0 +1,11 @@
+# /etc/portage/repos.conf/omarchy.conf
+# Add this overlay to emerge on your Gentoo box.
+# priority=100: 同版本号 (例如别的 overlay 也收录 gum-2.0.1) 时优先装本仓库.
+
+[omarchy]
+location = /var/db/repos/omarchy
+sync-type = git
+sync-uri = https://github.com/Lax/omarchy-overlay.git
+masters = gentoo
+auto-sync = yes
+priority = 100

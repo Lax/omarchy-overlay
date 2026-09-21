@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE pkgmetadata SYSTEM "https://www.gentoo.org/dtd/metadata.dtd">
+<pkgmetadata>
+	<maintainer type="person">
+		<email>liulantao@gmail.com</email>
+		<name>Lax</name>
+	</maintainer>
+	<longdescription>
+		Emacs integration for Omarchy: init/omarchy config tree, theme template
+		and the hooks omarchy-theme-set / omarchy-font-set call to keep Emacs in
+		sync with the active Omarchy theme.
+	</longdescription>
+	<upstream>
+		<remote-id type="github">scottjones/omarchy-emacs</remote-id>
+	</upstream>
+</pkgmetadata>

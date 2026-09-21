@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE pkgmetadata SYSTEM "https://www.gentoo.org/dtd/metadata.dtd">
+<pkgmetadata>
+	<maintainer type="person">
+		<email>liulantao@gmail.com</email>
+		<name>Lax</name>
+	</maintainer>
+	<longdescription>
+		LazyVim configuration from Omarchy. Gentoo deviation: the plugin cache
+		is not prebuilt at package time (that requires network in the build
+		sandbox); lazy.nvim syncs on first launch instead, and
+		omarchy-nvim-setup seeds or resets the user config.
+	</longdescription>
+	<upstream>
+		<remote-id type="github">omacom/omarchy-pkgs</remote-id>
+	</upstream>
+</pkgmetadata>

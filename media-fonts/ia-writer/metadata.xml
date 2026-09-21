@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE pkgmetadata SYSTEM "https://www.gentoo.org/dtd/metadata.dtd">
+<pkgmetadata>
+	<maintainer type="person">
+		<email>liulantao@gmail.com</email>
+		<name>Lax</name>
+	</maintainer>
+	<longdescription>
+		Mono, Quattro and Duo faces from iA Writer, plus the legacy Duospace
+		family pinned at its last revision — the writing fonts Omarchy themes
+		offer (mirrors upstream ttf-ia-writer).
+	</longdescription>
+	<upstream>
+		<remote-id type="github">iaolo/iA-Fonts</remote-id>
+	</upstream>
+</pkgmetadata>

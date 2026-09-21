@@ -1,0 +1,26 @@
+#!/bin/bash
+
+# omarchy:summary=Install Gentoo packages if they are missing
+# omarchy:args=<packages...>
+# omarchy:examples=omarchy pkg add app-misc/jq sys-apps/bat
+# omarchy:requires-sudo=true
+# Gentoo port: pacman -S --needed -> emerge --noreplace. Atoms must be
+# category-qualified (app-misc/jq); qlist -Ie is the installed check.
+
+if omarchy-pkg-missing "$@"; then
+  if (( EUID == 0 )); then
+    emerge --noreplace "$@" || exit 1
+  else
+    sudo emerge --noreplace "$@" || exit 1
+  fi
+fi
+
+for pkg in "$@"; do
+  # Secondary check to handle states where emerge didn't actually register an error
+  if ! qlist -Ie "$pkg" &>/dev/null; then
+    echo -e "\033[31mError: Package '$pkg' did not install\033[0m" >&2
+    exit 1
+  fi
+done
+
+exit 0

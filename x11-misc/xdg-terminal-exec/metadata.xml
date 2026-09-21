@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE pkgmetadata SYSTEM "https://www.gentoo.org/dtd/metadata.dtd">
+<pkgmetadata>
+	<maintainer type="person">
+		<email>liulantao@gmail.com</email>
+		<name>Lax</name>
+	</maintainer>
+	<longdescription>
+		Default Terminal Executor Specification implementation: resolves the
+		terminal used to launch desktop entries with Terminal=true. Omarchy's
+		xdg-terminal-exec defaults list ships with app-misc/omarchy-settings.
+	</longdescription>
+	<upstream>
+		<remote-id type="freedesktop-gitlab">Vladimir-csp/xdg-terminal-exec</remote-id>
+	</upstream>
+</pkgmetadata>

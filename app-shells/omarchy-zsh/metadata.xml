@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE pkgmetadata SYSTEM "https://www.gentoo.org/dtd/metadata.dtd">
+<pkgmetadata>
+	<maintainer type="person">
+		<email>liulantao@gmail.com</email>
+		<name>Lax</name>
+	</maintainer>
+	<longdescription>
+		Omarchy shell configuration for Zsh: shared omadots config (aliases,
+		functions, envs) rewritten to load from /usr/share/omarchy-zsh, plus
+		zoptions and completions; omarchy-setup-zsh switches the login shell.
+	</longdescription>
+	<upstream>
+		<remote-id type="github">omacom-io/omarchy-zsh</remote-id>
+	</upstream>
+</pkgmetadata>

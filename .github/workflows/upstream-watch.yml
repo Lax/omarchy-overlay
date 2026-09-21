@@ -1,0 +1,38 @@
+name: upstream-watch
+
+# Port of omarchy-pkgs' omarchy-check-versions.timer + human merge flow: the
+# watcher only reports; a human applies bumps (scripts/bump-omarchy.sh for the
+# omarchy pair, version-bump commits elsewhere).
+
+on:
+  schedule:
+    - cron: "23 4 * * *"
+  workflow_dispatch:
+
+jobs:
+  check:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Check upstream versions
+        id: check
+        continue-on-error: true
+        run: |
+          set +e
+          ./scripts/check-upstream.sh | tee report.txt
+          echo "exitcode=${PIPESTATUS[0]}" >> "$GITHUB_OUTPUT"
+      - name: Open or update a drift issue
+        if: steps.check.outputs.exitcode != '0'
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          title="Upstream updates available"
+          if gh issue list --repo "$GITHUB_REPOSITORY" --state open --search "$title in:title" | grep -q .; then
+            gh issue comment --repo "$GITHUB_REPOSITORY" \
+              --body "$(cat report.txt)" \
+              "$(gh issue list --repo "$GITHUB_REPOSITORY" --state open --search "$title in:title" --json number --jq '.[0].number')"
+          else
+            gh issue create --repo "$GITHUB_REPOSITORY" \
+              --title "$title" \
+              --body "$(cat report.txt)"
+          fi

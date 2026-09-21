@@ -1,0 +1,26 @@
+--- a/bin/omarchy-migrate
++++ b/bin/omarchy-migrate
+@@ -66,17 +66,17 @@
+ fi
+ 
+ wait_for_pacman_transaction() {
+-  local lock_file=/var/lib/pacman/db.lck
+-
+-  [[ -e $lock_file ]] || return 0
+-  echo "Waiting for pacman transaction to finish before running Omarchy migrations..."
++  # Gentoo port: portage has no global lock file; a running emerge is the
++  # equivalent signal.
++  pgrep -x emerge &>/dev/null || return 0
++  echo "Waiting for portage to finish before running Omarchy migrations..."
+ 
+   for _ in {1..900}; do
+-    [[ -e $lock_file ]] || return 0
++    pgrep -x emerge &>/dev/null || return 0
+     sleep 1
+   done
+ 
+-  echo "Pacman transaction is still running; Omarchy migrations will retry on next login."
++  echo "Portage is still running; Omarchy migrations will retry on next login."
+   exit 0
+ }
+ 

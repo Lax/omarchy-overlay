@@ -1,0 +1,16 @@
+name: ci
+
+on:
+  push:
+    branches: [master]
+  pull_request:
+
+jobs:
+  pkgcheck:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Run pkgcheck
+        uses: pkgcore/pkgcheck-action@8491e92faa1010d5c6947c114d23215e5a74684e
+        # exemptions live in metadata/pkgcheck.conf (cross-overlay deps on
+        # ::guru / ::hyproverlay are invisible to the CI's ::gentoo only view)

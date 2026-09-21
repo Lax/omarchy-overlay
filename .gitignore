@@ -1,0 +1,6 @@
+# ZCode plugin artifacts (session-local, not repo content)
+.v2c/
+.video_agent/
+
+# portage-generated metadata cache
+metadata/md5-cache/
