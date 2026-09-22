@@ -88,9 +88,9 @@ yt-dlp、ghostty、sunshine 等）：以文档化的 emerge 清单为主，关�
    依赖对应应用存在（alacritty/foot/ghostty/kitty/btop/chromium…）；
    与 P1/P2 的应用到位后逐个验证，aether 接管取色。
 2. **输入法**：fcitx5 + gtk/qt 模块（base.packages 内），environment.d
-   与 user unit 已随 settings 落地，补主树包即可（::gentoo 的
-   app-i18n/fcitx 即 Fcitx 5，套件见 app-i18n/fcitx-*；上游二进制仓库的
-   fcitx5 条目是残留构建）。
+   与 user unit 已随 settings 落地；三件套已由 `app-misc/omarchy` RDEPEND
+   拉入主树包（::gentoo 的 app-i18n/fcitx 即 Fcitx 5，套件见
+   app-i18n/fcitx-*；上游二进制仓库的 fcitx5 条目是残留构建）✅ 2026-09-22。
 3. **会话**：uwsm 会话文件已落地（settings 改装 /usr/share/wayland-sessions）；
    SDDM 主题/自动登录、Hyprland 会话变量复核。
 4. **迁移器**：`omarchy update` 触发 `omarchy-migrate`（已 patch），

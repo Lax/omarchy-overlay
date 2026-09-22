@@ -74,7 +74,7 @@ dotnet-host/runtime/sdk/targeting-pack-bin + aspnet-runtime/targeting-pack-bin�
 | nautilus-dropbox | `gnome-extra/nautilus-dropbox` | ::gentoo |
 | tzupdate | `app-misc/tzupdate` | ::gentoo |
 | opencode（stable 残留，edge 已移除） | `dev-util/opencode-bin` | ::guru |
-| fcitx5（stable 残留） | `app-i18n/fcitx` | ::gentoo 的 fcitx 即 Fcitx 5 |
+| fcitx5（stable 残留） | `app-i18n/fcitx` | ::gentoo 的 fcitx 即 Fcitx 5；三件套（fcitx/fcitx-gtk/fcitx-qt，对应 base.packages 的 fcitx5/fcitx5-gtk/fcitx5-qt）由 `app-misc/omarchy` RDEPEND 拉入（2026-09-22） |
 
 ## 4. Omarchy 自有工具 / 开源无包 — P2 移植候选（65 个 stable 条目）
 

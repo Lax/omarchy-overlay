@@ -25,8 +25,19 @@ KEYWORDS="~amd64"
 #   fakeroot/pacman-contrib -> the portage toolbelt (eix/gentoolkit/portage-utils)
 #   limine*/snapper     -> Gentoo boots via grub/systemd-boot; no bootloader here
 #   ttf-jetbrains-mono-nerd-basic -> media-fonts/jetbrains-mono-nerd-basic
+#
+# One deliberate addition beyond the PKGBUILD array, from the ISO install set
+# (install/omarchy-base.packages) instead: fcitx5/fcitx5-gtk/fcitx5-qt.
+# omarchy-settings ships default/environment.d/10-omarchy-fcitx.conf and the
+# omarchy-fcitx5.service user unit (the XCompose input chain), so the desktop
+# is broken without an fcitx5 binary; ::gentoo's app-i18n/fcitx IS Fcitx 5
+# (upstream's pkgs.omarchy.org fcitx5 entry is a leftover build), mapped per
+# the decision tree as delegate-to-Gentoo — no overlay ebuild.
 RDEPEND="
 	~app-misc/omarchy-settings-${PV}
+	app-i18n/fcitx
+	app-i18n/fcitx-gtk
+	app-i18n/fcitx-qt
 	app-misc/jq
 	app-portage/eix
 	app-portage/gentoolkit
