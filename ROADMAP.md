@@ -13,6 +13,9 @@ upstream-watch 追版 → 人审合并。
 - `config/`、`default/` — 配置与主题模板（已随 settings 落地）
 - `applications/` — 自带 .desktop 与 webapp 启动器（已落地）
 - `agents/`、`manual/` — AI agent 技能与桌面手册
+- `pkgs.omarchy.org` — 上游二进制仓库（stable/rc/edge × x86_64/aarch64），
+  stable x86_64 188 实包；全量逐包映射见
+  [docs/omarchy-pkgs-map.md](docs/omarchy-pkgs-map.md)
 
 ## ✅ P0 — 本次已完成
 
@@ -20,6 +23,8 @@ upstream-watch 追版 → 人审合并。
 - walker 生态（elephant + walker）、omarchy-zsh/fish、omarchy-emacs、
   omarchy-nvim（配置层）、xdg-terminal-exec、两个系统字体
 - 管理基建：upstream-watch、check/bump 脚本、CI（pkgcheck + 每日追版）
+- 厂商应用引用机制 `omarchy-apps/*`：16 个引用元包落地（2026-09）；
+  上游包全量映射 docs/omarchy-pkgs-map.md + 维护 skill
 
 ## P1 — 基础：把 base.packages 翻译成 Gentoo 基座
 
@@ -52,26 +57,28 @@ localsend、once 等）维持排除，其中开源的 localsend/once/mise 是后
 
 ## P2 — 应用：Omarchy 自有工具 + 应用清单
 
-Omarchy 的"标志性体验"大半来自自有小工具，全部在 omarchy-pkgs 有配方，
-适合逐个移植（Go/Rust/Qt Quick，go-module/cargo ebuild 模式已验证）：
+Omarchy 的"标志性体验"大半来自自有小工具。厂商应用已由 `omarchy-apps/*`
+引用元包落地（✅ 2026-09，见 README「厂商应用」节）；本阶段是自有工具的
+源码移植。候选以 [docs/omarchy-pkgs-map.md](docs/omarchy-pkgs-map.md)
+「P2 候选」节为权威清单（65 个 stable 条目，随上游增减），当前分组：
 
-| 工具 | 上游描述 | 优先级 |
+| 优先级 | 工具（上游包名） | 说明 |
 |---|---|---|
-| tensaku | Wayland 截图标注 | 高（核心交互链路：grim → 标注 → 剪贴板） |
-| aether | 从壁纸取色并统一下发主题 | 高（与 theme-set-* 联动，是主题体验的大脑） |
-| omacalc | Qt Quick 计算器 | 中 |
-| omacut | Qt Quick + ffmpeg 视频裁剪 | 中 |
-| omawrite | Qt Quick Markdown 写作 | 中 |
-| cliamp | Winamp 风格终端音乐播放器 | 低 |
-| herdr | AI coding agent 终端工作台 | 低（依赖 AI 生态，见 P4） |
-| ttfx / usage / tobi-try / asdcontrol | 终端特效 / 磁盘用量 / 随手目录 / Apple 显示器亮度 | 低 |
+| 高（核心交互/主题链路） | tensaku、aether、flea、strata、elsewhen、hyprshade、hyprland-preview-share-picker | 截图标注 / 主题大脑 / 文件管理器×2 / 世界时钟插件 / 滤镜 / 分享选择器 |
+| 中（Qt Quick 工具链） | omacalc、omacut、omapresent、omawrite、omakade、hype(edge)、omarchy-task-manager(edge) | 计算器 / 裁剪 / 演示 / 写作 / 游戏库 / 任务管理器 |
+| 中（omarchy 周边） | omareel、omasnap、omatrack、omazed、owe、owe-lockfeed、herdr、omarchy-herdr、wayfreeze、ttfx | 随上游节奏逐个评估（herdr 依赖 AI 生态，见 P4） |
+| 低（官方配套/脚本） | cliamp、learn-omarchy、omarchy-audio-tuner、omarchy-billboard-generator、tobi-try、qmk-hid、asdcontrol、ufw-docker、gliff(edge)、monologue(edge) | |
+| 低（无包的开源件，源码移植） | localsend、mise（GURU 已 treeclean）、once、yaru-icon-theme（+8 拆分）、schist 与 lmstudio 源码版残留、vi、symfony-cli、python-sounddevice、python-terminaltexteffects | 明细见映射文档 |
+| 按需（RetroArch 生态） | libretro-cap32/database/fbneo/uae-git、libretro-vice-*-git（10 个）、retroarch-joypad-autoconfig-git | ::gentoo 仅 7 个 core，RetroArch 本体在 ::guru |
 
 主树应用清单（chromium、libreoffice-fresh、obs-studio、kdenlive、
-nautilus + gvfs、mpv、imv、evince、xournalpp、pinta、localsend、
-moonlight-qt、yt-dlp、obsidian 等）：以文档化的 emerge 清单为主，仅
-主树缺失时建包（如 obsidian 无官方 ebuild，可作 bin 包评估）。
+nautilus + gvfs、mpv、imv、evince、xournalpp、pinta、moonlight-qt、
+yt-dlp、ghostty、sunshine 等）：以文档化的 emerge 清单为主，关键 atoms
+已于 2026-09 逐个核实（见映射文档「交上游仓库」节）。两处修正：localsend
+无包，移入上面源码移植候选；obsidian 两仓库均无 ebuild，维持 bin 包评估。
 
-落地形式：`app-misc/omarchy-apps` 建议清单（文档）+ 逐个自有工具 ebuild。
+落地形式：自有工具逐个 ebuild（go-module/cargo 模式已验证）+ P1 的
+`omarchy-base` 元包分组。
 
 ## P3 — 配置：让主题与交互链路端到端跑通
 
@@ -81,7 +88,9 @@ moonlight-qt、yt-dlp、obsidian 等）：以文档化的 emerge 清单为主，
    依赖对应应用存在（alacritty/foot/ghostty/kitty/btop/chromium…）；
    与 P1/P2 的应用到位后逐个验证，aether 接管取色。
 2. **输入法**：fcitx5 + gtk/qt 模块（base.packages 内），environment.d
-   与 user unit 已随 settings 落地，补主树包即可。
+   与 user unit 已随 settings 落地，补主树包即可（::gentoo 的
+   app-i18n/fcitx 即 Fcitx 5，套件见 app-i18n/fcitx-*；上游二进制仓库的
+   fcitx5 条目是残留构建）。
 3. **会话**：uwsm 会话文件已落地（settings 改装 /usr/share/wayland-sessions）；
    SDDM 主题/自动登录、Hyprland 会话变量复核。
 4. **迁移器**：`omarchy update` 触发 `omarchy-migrate`（已 patch），
@@ -91,10 +100,14 @@ moonlight-qt、yt-dlp、obsidian 等）：以文档化的 emerge 清单为主，
 ## P4 — 其它：扩展面
 
 - **AI agents**：`agents/skills` 是给 Claude Code/OpenAI Codex 的技能文件，
-  已随元包落地为数据；herdr + claude-code 等二进制属于 vendor 排除项，
-  文档化手动安装路径（npm/官方源），不打包。
-- **Gaming**：retroarch、moonlight、steam 相关（base 里有 remove-gaming-*
-  命令组）；按需评估，非优先。
+  已随元包落地为数据。CLI 侧已有现成包并经 `omarchy-apps/*` 引用：
+  claude-code → dev-util/claude-code（::gentoo）、codex → dev-util/codex、
+  opencode → dev-util/opencode-bin（::guru）。桌面版（claude-desktop、
+  openai-codex-desktop）与 herdr 维持排除/按需，见映射文档。
+- **Gaming**：heroic、minecraft 已由 `omarchy-apps/*` 引用落地；umu-launcher
+  在 ::guru（games-util）；RetroArch 本体在 ::guru（games-emulation），
+  缺失 core 见 P2 按需组；steam 见 README anyc/steam-overlay 注记。
+  base 里有 remove-gaming-* 命令组，按需评估，非优先。
 - **文档**：`manual/`（omarchy 桌面手册）可作 `app-misc/omarchy-docs` 或
   指向上游文档站。
 - **edge 通道回归**：稳定线打磨后，再评估以 9999 live ebuild 提供
