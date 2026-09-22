@@ -15,7 +15,7 @@ upstream-watch 追版 → 人审合并。
 - `agents/`、`manual/` — AI agent 技能与桌面手册
 - `pkgs.omarchy.org` — 上游二进制仓库（stable/rc/edge × x86_64/aarch64），
   stable x86_64 188 实包；全量逐包映射见
-  [docs/omarchy-pkgs-map.md](docs/omarchy-pkgs-map.md)
+  [PKGS-MAP.md](PKGS-MAP.md)
 
 ## ✅ P0 — 本次已完成
 
@@ -24,7 +24,7 @@ upstream-watch 追版 → 人审合并。
   omarchy-nvim（配置层）、xdg-terminal-exec、两个系统字体
 - 管理基建：upstream-watch、check/bump 脚本、CI（pkgcheck + 每日追版）
 - 厂商应用引用机制 `omarchy-apps/*`：16 个引用元包落地（2026-09）；
-  上游包全量映射 docs/omarchy-pkgs-map.md + 维护 skill
+  上游包全量映射 PKGS-MAP.md + 维护 skill
 
 ## P1 — 基础：把 base.packages 翻译成 Gentoo 基座
 
@@ -52,14 +52,14 @@ sys-kernel/linux-firmware、limine 引导栈、硬件 DKMS 修复包。厂商应
 见 README「厂商应用」节）；无目标的（cursor、claude-desktop、perplexity、
 localsend、once 等）维持排除，其中开源的 localsend/once/mise 是后续源码
 移植候选。pkgs.omarchy.org 全量包的逐条处置见
-[docs/omarchy-pkgs-map.md](docs/omarchy-pkgs-map.md)——P2 选题以该文档
+[PKGS-MAP.md](PKGS-MAP.md)——P2 选题以该文档
 「P2 候选」节为权威清单。
 
 ## P2 — 应用：Omarchy 自有工具 + 应用清单
 
 Omarchy 的"标志性体验"大半来自自有小工具。厂商应用已由 `omarchy-apps/*`
 引用元包落地（✅ 2026-09，见 README「厂商应用」节）；本阶段是自有工具的
-源码移植。候选以 [docs/omarchy-pkgs-map.md](docs/omarchy-pkgs-map.md)
+源码移植。候选以 [PKGS-MAP.md](PKGS-MAP.md)
 「P2 候选」节为权威清单（65 个 stable 条目，随上游增减），当前分组：
 
 | 优先级 | 工具（上游包名） | 说明 |

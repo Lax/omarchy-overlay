@@ -1,11 +1,11 @@
 ---
 name: omarchy-pkgs-map
-description: Maintain the omarchy package mapping between pkgs.omarchy.org (upstream Arch binary repo) and the omarchy-overlay (Gentoo). Use whenever the user asks what packages upstream omarchy has, to sync/check/refresh upstream packages, to evaluate/port/exclude an omarchy package, or to update docs/omarchy-pkgs-map.md — even if they don't mention the map file. Also use after any upstream-watch or bump run that changes package coverage.
+description: Maintain the omarchy package mapping between pkgs.omarchy.org (upstream Arch binary repo) and the omarchy-overlay (Gentoo). Use whenever the user asks what packages upstream omarchy has, to sync/check/refresh upstream packages, to evaluate/port/exclude an omarchy package, or to update PKGS-MAP.md — even if they don't mention the map file. Also use after any upstream-watch or bump run that changes package coverage.
 ---
 
 # omarchy-pkgs-map：上游包清单与映射维护
 
-维护 `docs/omarchy-pkgs-map.md`——pkgs.omarchy.org 全量包 → 本 overlay / Gentoo
+维护 `PKGS-MAP.md`——pkgs.omarchy.org 全量包 → 本 overlay / Gentoo
 侧处置的完整映射。该文档是唯一 source of truth；README 的映射表是它的摘要，
 两者不一致时以映射文档为准并同步 README。
 
@@ -32,7 +32,7 @@ description: Maintain the omarchy package mapping between pkgs.omarchy.org (upst
    ```
 
 2. 与映射文档 diff：`cut -f1 /tmp/omarchy-stable.tsv` 对比
-   `docs/omarchy-pkgs-map.md` 各表"上游包"列的并集。产出三类动作：
+   `PKGS-MAP.md` 各表"上游包"列的并集。产出三类动作：
    新增（进决策树）、消失（从文档移除或标注残留）、仅版本变化（刷新文档
    头部的统计与日期，通常无需改映射）。
 
@@ -78,7 +78,7 @@ description: Maintain the omarchy package mapping between pkgs.omarchy.org (upst
   与排除项不注册。
 - 文档语言：README 与映射文档用中文；ebuild/metadata.xml 注释用英文。
 
-## 映射文档结构（docs/omarchy-pkgs-map.md）
+## 映射文档结构（PKGS-MAP.md）
 
 头部：数据源 URL + 抓取日期、stable/edge 包数、各处置类计数。
 正文按处置分类小节，每行 `上游包名 | 版本(可选) | 处置/atom | 备注`。

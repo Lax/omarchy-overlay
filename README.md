@@ -84,7 +84,7 @@ games-util/steam-launcher 已从 ::gentoo 移除（2026），x86 用户加
 anyc/steam-overlay；上游 omarchy-steam-fex 仅面向 aarch64（FEX 转译）。
 
 上游二进制仓库（pkgs.omarchy.org）全部包的逐条处置（含桌面组件、硬件排除、
-P2 候选、残留与拆分说明）见 [docs/omarchy-pkgs-map.md](docs/omarchy-pkgs-map.md)，
+P2 候选、残留与拆分说明）见 [PKGS-MAP.md](PKGS-MAP.md)，
 由 skill `omarchy-pkgs-map` 维护刷新。
 
 ## 启用与安装
@@ -227,4 +227,4 @@ git tag omarchy-v4.0.5           # 发版即打 tag（历史即版本档案）
 
 上游二进制仓库 pkgs.omarchy.org（stable/rc/edge × x86_64/aarch64）不在
 upstream-watch 跟踪范围内；其全量包映射与刷新流程见
-[docs/omarchy-pkgs-map.md](docs/omarchy-pkgs-map.md)（skill `omarchy-pkgs-map`）。
+[PKGS-MAP.md](PKGS-MAP.md)（skill `omarchy-pkgs-map`）。
