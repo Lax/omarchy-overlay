@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE pkgmetadata SYSTEM "https://www.gentoo.org/dtd/metadata.dtd">
+<pkgmetadata>
+	<maintainer type="person">
+		<email>liulantao@gmail.com</email>
+		<name>Lax</name>
+	</maintainer>
+	<longdescription>
+		Omarchy app reference: upstream omarchy-pkgs
+		pkgbuilds/omarchy-chromium-bin ships the vendor binary; on Gentoo
+		the browser is packaged as www-client/chromium (::gentoo), which
+		this metapackage pulls in. Ships no content itself.
+	</longdescription>
+	<upstream>
+		<remote-id type="github">omacom/omarchy-pkgs</remote-id>
+	</upstream>
+</pkgmetadata>

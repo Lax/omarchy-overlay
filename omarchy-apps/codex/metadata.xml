@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE pkgmetadata SYSTEM "https://www.gentoo.org/dtd/metadata.dtd">
+<pkgmetadata>
+	<maintainer type="person">
+		<email>liulantao@gmail.com</email>
+		<name>Lax</name>
+	</maintainer>
+	<longdescription>
+		Omarchy app reference: upstream omarchy-pkgs pkgbuilds/openai-codex-bin
+		installs the vendor tarball; on Gentoo the same Codex CLI is packaged
+		as dev-util/codex (::guru), which this metapackage pulls in. The
+		upstream openai-codex-desktop Electron app has no Gentoo equivalent.
+		Ships no content itself.
+	</longdescription>
+	<upstream>
+		<remote-id type="github">omacom/omarchy-pkgs</remote-id>
+	</upstream>
+</pkgmetadata>

@@ -45,6 +45,43 @@ Gentoo 移植，并按上游 [omacom/omarchy-pkgs](https://github.com/omacom/oma
 | `app-editors/omarchy-nvim` | omarchy-pkgs 内置配方 | LazyVim 配置层；见下方偏差说明 |
 | `media-fonts/jetbrains-mono-nerd-basic` | ryanoasis/nerd-fonts | 系统 UI 字体（-basic 四字重） |
 | `media-fonts/ia-writer` | iaolo/iA-Fonts | 写作字体（Duospace 侧封存于上游已删的 commit） |
+| `omarchy-apps/*`（16 个） | pkgbuilds 各应用配方 | 厂商应用引用元包：无内容，RDEPEND 指向 ::gentoo / ::guru 现成包，见下方「厂商应用」节 |
+
+## 厂商应用：`omarchy-apps/*` 引用元包
+
+上游把大量应用以 vendor 二进制配方分发（1password、spotify、claude-code…）。
+其中绝大多数 Gentoo 侧已有现成包（::gentoo 或 ::guru），本 overlay 不重打包，
+而是提供 `omarchy-apps/<app>` **引用元包**：无内容、`LICENSE="metapackage"`、
+仅 RDEPEND 指向真实包，`emerge omarchy-apps/spotify` 即装官方客户端：
+
+| omarchy-apps/* | 上游配方（omarchy-pkgs） | 实际包 |
+|---|---|---|
+| 1password | 1password | gui-apps/1password（guru） |
+| 1password-cli | 1password-cli | app-misc/1password-cli（guru） |
+| spotify | spotify | media-sound/spotify |
+| claude-code | claude-code | dev-util/claude-code |
+| codex | openai-codex-bin | dev-util/codex（guru） |
+| vscode | visual-studio-code-bin | app-editors/vscode |
+| sublime-text | sublime-text-4 | app-editors/sublime-text |
+| typora | typora | app-editors/typora-bin（guru） |
+| dropbox | dropbox + dropbox-cli | net-misc/dropbox、net-misc/dropbox-cli |
+| heroic-games-launcher | heroic-games-launcher-bin | games-util/heroic-bin |
+| minecraft-launcher | minecraft-launcher | games-action/minecraft-launcher |
+| bambustudio | bambustudio-bin | media-gfx/bambustudio-bin（guru） |
+| bun | bun-bin | dev-lang/bun-bin（guru） |
+| crush | crush-bin | app-misc/crush（guru） |
+| dotnet | dotnet-core-bin | dev-dotnet/dotnet-sdk-bin |
+| chromium | omarchy-chromium-bin | www-client/chromium |
+
+无 Gentoo 目标的应用不建包，按需替代：cursor、claude-desktop、
+openai-codex-desktop、perplexity、grok-bot、hermes-desktop、t3code-bin、
+slap-notes-bin、schist-bin、tmog-bin、voxtype-bin、omawake-bin、omaspeak-bin、
+link-studio、openclaw、lmstudio-bin、nordvpn-bin、rustdesk、localsend、
+basecamp-cli、dbxcli-bin、makima-bin、once-bin、1password-beta——多为
+Electron/.deb/AppImage，用上游渠道或 flatpak 自装。localsend、once 为开源
+项目，是 P2 的源码移植候选；mise 见下方手动安装说明。steam 另注：
+games-util/steam-launcher 已从 ::gentoo 移除（2026），x86 用户加
+anyc/steam-overlay；上游 omarchy-steam-fex 仅面向 aarch64（FEX 转译）。
 
 ## 启用与安装
 
@@ -70,6 +107,8 @@ app-editors/omarchy-emacs ~amd64
 app-editors/omarchy-nvim ~amd64
 media-fonts/jetbrains-mono-nerd-basic ~amd64
 media-fonts/ia-writer ~amd64
+# — omarchy-apps/* 引用元包（本体无内容，真实包按各自仓库 keyword）
+omarchy-apps/* ~amd64
 # — omarchy-zsh 需要的主树 ~amd64 包
 app-shells/zoxide ~amd64
 # — ::guru / ::hyproverlay 桌面依赖
@@ -150,8 +189,12 @@ omarchy-start          # startx 的等价物 = uwsm start omarchy.desktop
    grub/systemd-boot + 你自己的快照方案。
 3. **内核**：linux-omarchy（bore/ptl）不移植，用 sys-kernel/gentoo-sources。
 4. **omarchy-keyring**：portage 按仓库 Manifest 校验，无 keyring 概念。
-5. **vendor 二进制**（omarchy-chromium-bin、1password、spotify、claude-code
-   等）与硬件 DKMS 修复包不移植；chromium 用 www-client/chromium。
+5. **硬件 DKMS 修复包**不移植。yt6801-dkms（Motorcomm YT6801 网卡）评估于
+   2026-09：主线 Linux 7.0 起由 dwmac-motorcomm（CONFIG_DWMAC_MOTORCOMM）
+   原生支持且无需固件，gentoo-sources ≥ 7.0 开启该选项即可，无需 DKMS 包。
+   厂商应用类（原第 5 条的 omarchy-chromium-bin、1password、spotify、
+   claude-code 等）自 2026-09 起改经 `omarchy-apps/*` 引用元包落地，见
+   「厂商应用」节。
 6. **libalpm hooks**：无 portage 通用对应物，不移植。
 7. **os-release 覆盖**：上游把 /etc/os-release 改写成 Omarchy；Gentoo 保留
    自己的身份信息，参考副本在 `/usr/share/omarchy/etc-overrides/`。

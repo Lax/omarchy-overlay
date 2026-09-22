@@ -42,7 +42,11 @@ upstream-watch 追版 → 人审合并。
 | 落地形式 | — | `app-misc/omarchy-base` 元包（RDEPEND 分组）+ `package.use` 建议 | P1 |
 
 有意排除（与 README"有意不移植"一致）：内核（linux-omarchy）、固件层交
-sys-kernel/linux-firmware、limine 引导栈、硬件 DKMS 修复包。
+sys-kernel/linux-firmware、limine 引导栈、硬件 DKMS 修复包。厂商应用不重
+打包：Gentoo 侧已有现成包的经 `omarchy-apps/*` 引用元包落地（2026-09 起，
+见 README「厂商应用」节）；无目标的（cursor、claude-desktop、perplexity、
+localsend、once 等）维持排除，其中开源的 localsend/once/mise 是后续源码
+移植候选。
 
 ## P2 — 应用：Omarchy 自有工具 + 应用清单
 

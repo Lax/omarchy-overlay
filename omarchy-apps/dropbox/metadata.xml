@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE pkgmetadata SYSTEM "https://www.gentoo.org/dtd/metadata.dtd">
+<pkgmetadata>
+	<maintainer type="person">
+		<email>liulantao@gmail.com</email>
+		<name>Lax</name>
+	</maintainer>
+	<longdescription>
+		Omarchy app reference: upstream omarchy-pkgs pkgbuilds/dropbox and
+		pkgbuilds/dropbox-cli ship the vendor daemon and a CLI wrapper; on
+		Gentoo both are packaged as net-misc/dropbox and
+		net-misc/dropbox-cli (::gentoo), which this metapackage pulls in.
+		Ships no content itself.
+	</longdescription>
+	<upstream>
+		<remote-id type="github">omacom/omarchy-pkgs</remote-id>
+	</upstream>
+</pkgmetadata>
