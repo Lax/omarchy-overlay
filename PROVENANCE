@@ -1,12 +1,13 @@
-omarchy-gentoo overlay, mirrored from the master branch of
+omarchy-gentoo overlay, mirrored from
 https://github.com/Lax/omarchy-gentoo (the gentoo/ directory).
 
-master:   ea791eb522f0d9d716106f7f7d694c34fa1c07b7
+project:  c9972d348b9e808686286999a69fb8b74e368c05
 upstream: ed6a3869c73a19bedb579515841d6804b9411242
 
-master   the omarchy-gentoo commit this tree was generated from
+project  the omarchy-gentoo commit this tree was generated from
 upstream the omacom/omarchy-pkgs commit its PKGBUILDs reflect,
-         i.e. the submodule pin carried by that master commit
+         i.e. the submodule pin carried by that commit
 
-The overlay branch's own commit history records when each mirror
-ran; both ids also appear in every mirror commit message.
+This tree is published at https://github.com/Lax/omarchy-overlay.
+The publish history records when each mirror ran; both ids also
+appear in every mirror commit message.
