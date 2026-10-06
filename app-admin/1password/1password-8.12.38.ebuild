@@ -1,21 +1,22 @@
-# arch-pkgver: 8.12.40_23.BETA
-# Ported from pkgbuilds/1password-beta; twin of app-admin/1password on the
-# beta channel. Arch's pkgver "8.12.40_23.BETA" is not a PMS version string;
-# the ebuild filename uses 8.12.40.23_beta while the marker keeps upstream's
-# exact version for the drift checker.
+# arch-pkgver: 8.12.38
+# Ported from pkgbuilds/1password. Two deliberate Gentoo differences:
+# - the onepassword group is an acct-group package (Arch: .install groupadd);
+#   the setgid browser helper is handled in pkg_postinst;
+# - the polkit policy is generated at build time from this machine's
+#   /etc/passwd like the Arch recipe does, which is correct here precisely
+#   because source-based installs run on the target machine.
 EAPI=8
 
 inherit desktop
 
 DESCRIPTION="Password manager and secure wallet"
 HOMEPAGE="https://1password.com"
-_tarver="8.12.40-23.BETA"
 SRC_URI="
-	amd64? ( https://downloads.1password.com/linux/tar/beta/x86_64/1password-${_tarver}.x64.tar.gz -> ${P}-x64.tar.gz )
-	arm64? ( https://downloads.1password.com/linux/tar/beta/aarch64/1password-${_tarver}.arm64.tar.gz -> ${P}-arm64.tar.gz )
+	amd64? ( https://downloads.1password.com/linux/tar/stable/x86_64/1password-${PV}.x64.tar.gz )
+	arm64? ( https://downloads.1password.com/linux/tar/stable/aarch64/1password-${PV}.arm64.tar.gz )
 "
 
-S="${WORKDIR}/1password-${_tarver}.x64"
+S="${WORKDIR}/1password-${PV}.x64"
 LICENSE="all-rights-reserved"
 SLOT="0"
 KEYWORDS="~amd64 ~arm64"
@@ -30,13 +31,16 @@ RDEPEND="
 RESTRICT="strip mirror"
 
 if [[ ${ARCH} == arm64 ]]; then
-	S="${WORKDIR}/1password-${_tarver}.arm64"
+	S="${WORKDIR}/1password-${PV}.arm64"
 fi
 
+# Render the policy template with POLICY_OWNERS substituted (the Arch recipe
+# evals a heredoc; this is the same expansion without eval).
 render_polkit_policy() {
 	sed "s|\${POLICY_OWNERS}|${POLICY_OWNERS}|g" \
 		com.1password.1Password.policy.tpl >com.1password.1Password.policy ||
 		die "could not render polkit policy"
+	# Fail loudly when the template uses a variable this function ignores.
 	grep -q '${' com.1password.1Password.policy &&
 		die "unsubstituted variable left in polkit policy"
 	return 0
@@ -49,10 +53,14 @@ src_install() {
 		doins "resources/icons/hicolor/${resolution}/apps/1password.png"
 	done
 
+	# 1Password reads the display scale itself, the way Electron apps do, and
+	# comes up oversized next to every other window on a scaled monitor. Pin
+	# it and let the compositor do the scaling.
 	sed -i 's|^Exec=.*|Exec=/opt/1Password/1password --force-device-scale-factor=1 %U|' \
 		resources/com.onepassword.OnePassword.desktop || die
-	newmenu resources/com.onepassword.OnePassword.desktop 1password-beta.desktop
+	newmenu resources/com.onepassword.OnePassword.desktop 1password.desktop
 
+	# System-unlock polkit policy, filled in with the first ten human users.
 	local policy_owners
 	policy_owners="$(
 		cut -d: -f1,3 /etc/passwd | grep -E ':[0-9]{4}$' | cut -d: -f1 |
@@ -65,9 +73,12 @@ src_install() {
 	docinto examples
 	dodoc resources/custom_allowed_browsers
 
+	# The whole tree into /opt with the tarball's own modes intact
+	# (cp -a preserves the vendor's exec and setuid bits).
 	dodir /opt/1Password
 	cp -a . "${ED}/opt/1Password/" || die
 
+	# Not installed by this package.
 	rm -f "${ED}/opt/1Password/com.1password.1Password.policy" \
 		"${ED}/opt/1Password/com.1password.1Password.policy.tpl" \
 		"${ED}/opt/1Password/install_biometrics_policy.sh" || die
@@ -75,12 +86,15 @@ src_install() {
 	rm -f "${ED}/opt/1Password/resources/com.onepassword.OnePassword.desktop" \
 		"${ED}/opt/1Password/resources/custom_allowed_browsers" || die
 
+	# chrome-sandbox requires the setuid bit to be specifically set.
 	fperms 4755 /opt/1Password/chrome-sandbox
 
 	dosym -r /opt/1Password/1password /usr/bin/1password
 }
 
 pkg_postinst() {
+	# Arch's .install sets the setgid bit on the browser helper for the
+	# onepassword group; mirror that here, after the group exists.
 	local helper="${EROOT}/opt/1Password/1Password-BrowserSupport"
 	if [[ -e "${helper}" ]]; then
 		chgrp onepassword "${helper}" ||
@@ -89,8 +103,6 @@ pkg_postinst() {
 			ewarn "could not setgid ${helper}"
 	fi
 
-	elog "1Password beta ${_tarver} installs alongside nothing: like upstream it"
-	elog "conflicts with stable 1password, so the two cannot be co-installed."
 	elog "Browser integration: add your user to the onepassword group"
 	elog "(gpasswd -a <user> onepassword) ONLY if you understand the security"
 	elog "implications - it grants the browser helper access to the app."
