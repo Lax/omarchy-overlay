@@ -1,7 +1,7 @@
 omarchy-gentoo overlay, mirrored from
 https://github.com/Lax/omarchy-gentoo (the gentoo/ directory).
 
-project:  8a29024de0e341c435cb288f7fbef6eb72efe9c8
+project:  a852f11c60390ee952fc7ec4d393804def818448
 upstream: b785a83fb27fc193e9c449fe8143f76228274e3e
 
 project  the omarchy-gentoo commit this tree was generated from
