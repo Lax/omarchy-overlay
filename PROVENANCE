@@ -1,8 +1,8 @@
 omarchy-gentoo overlay, mirrored from
 https://github.com/Lax/omarchy-gentoo (the gentoo/ directory).
 
-project:  1d48bf3aee1a8c7386f93190d8fb1496c813eb81
-upstream: b712f889899bf54e4d60870512bcd768e6f5911a
+project:  9be976ff8a9a7007591b8641d265ab6b07046196
+upstream: d0a67385ccb2ffbcc77ec68aa9899a62536ca57c
 
 project  the omarchy-gentoo commit this tree was generated from
 upstream the omacom/omarchy-pkgs commit its PKGBUILDs reflect,
