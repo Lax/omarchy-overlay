@@ -1,4 +1,4 @@
-# arch-pkgver: 26.10.2+build122020
+# arch-pkgver: 26.10.3+build131497
 # Ported from pkgbuilds/perplexity. The Arch version's "+build" does not fit a
 # Gentoo version string; it maps to the _p suffix here. The pool URL needs %2B
 # for '+'.
@@ -38,10 +38,10 @@ RDEPEND="
 	dev-libs/nspr
 	dev-libs/nss
 	media-libs/alsa-lib
-	media-libs/libdrm
+	x11-libs/libdrm
 	media-libs/libglvnd
-	media-libs/libnotify
-	media-libs/libsecret
+	x11-libs/libnotify
+	app-crypt/libsecret
 	media-libs/mesa
 	net-print/cups
 	sys-apps/bubblewrap
