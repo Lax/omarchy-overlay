@@ -10,10 +10,11 @@
 # Upstream migrations and scripts pass Arch package names. Map the ones whose
 # Gentoo atom differs before the emerge; everything else passes through
 # unchanged (an unqualified name resolves whenever the Gentoo PN matches).
+# BEGIN RUNTIME MAP - generated from helpers/gentoo.sh (bin/gentoo-runtime-map); edit the table there, not here.
 declare -A OMARCHY_ARCH_TO_GENTOO=(
 	[libvips]=media-libs/vips
 	[qt6-imageformats]=dev-qt/qtimageformats
-	[lsp-plugins-lv2]=media-plugins/lsp-plugins
+	[lsp-plugins-lv2]=media-libs/lsp-plugins
 	[libfprint-git]=sys-auth/libfprint
 	# Intel/AMD/Asahi Vulkan ships in media-libs/mesa (vulkan USE), not as
 	# separate driver packages like on Arch.
@@ -34,7 +35,14 @@ declare -A OMARCHY_ARCH_TO_GENTOO=(
 	#   media-libs/vpl-gpu-rt ~amd64   (and libva-intel-media-driver for
 	#   its 26.3+ dependency chain) in package.accept_keywords, or the
 	# migration fails outright.
+	# The Qt6 stack loses the qt6- prefix (dev-qt/qtbase:6 et al).
+	[qt6-base]=dev-qt/qtbase:6
+	[qt6-declarative]=dev-qt/qtdeclarative:6
+	[qt6-multimedia]=dev-qt/qtmultimedia:6
+	[qt6-svg]=dev-qt/qtsvg:6
+	[qt6-wayland]=dev-qt/qtwayland:6
 )
+# END RUNTIME MAP
 
 if (($#)); then
   mapped=()
